@@ -95,7 +95,7 @@
 
       document.getElementById('responseBox').innerText = "Thinking...";
 
-      const res = await fetch('/ask', {
+      const res = await fetch('https://vikss-backend.onrender.com/ask', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ prompt })
