@@ -89,24 +89,30 @@
   </div>
 
 <script>
-  const askQuestion = async () => {
-    const prompt = document.getElementById("promptInput").value;
+  const sendPrompt = async () => {
+    const prompt = document.getElementById("userInput").value;
     const responseBox = document.getElementById("responseBox");
 
     responseBox.innerText = "Thinking...";
 
-    const res = await fetch("https://vikss-backend.onrender.com/ask", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ prompt })
-    });
+    try {
+      const res = await fetch("https://vikss-backend.onrender.com/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt })
+      });
 
-    const data = await res.json();
-    responseBox.innerText = data.response;
+      const data = await res.json();
+      responseBox.innerText = data.response;
+    } catch (error) {
+      responseBox.innerText = "Error contacting server.";
+      console.error("Request failed:", error);
+    }
   };
 </script>
+
 
 
 </body>
