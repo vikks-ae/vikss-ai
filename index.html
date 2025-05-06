@@ -88,24 +88,26 @@
     <button onclick="sendPrompt()">Ask VIKSS AI</button>
   </div>
 
-  <script>
-    async function sendPrompt() {
-      const prompt = document.getElementById('userInput').value;
-      if (!prompt.trim()) return;
+<script>
+  const askQuestion = async () => {
+    const prompt = document.getElementById("promptInput").value;
+    const responseBox = document.getElementById("responseBox");
 
-      document.getElementById('responseBox').innerText = "Thinking...";
+    responseBox.innerText = "Thinking...";
 
-      const res = await fetch('https://vikss-backend.onrender.com/ask', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ prompt })
-      });
+    const res = await fetch("https://vikss-backend.onrender.com/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ prompt })
+    });
 
-      const data = await res.json();
-      document.getElementById('responseBox').innerText = data.response;
-      document.getElementById('userInput').value = "";
-    }
-  </script>
+    const data = await res.json();
+    responseBox.innerText = data.response;
+  };
+</script>
+
 
 </body>
 </html>
