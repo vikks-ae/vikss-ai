@@ -96,16 +96,22 @@
     responseBox.innerText = "Thinking...";
 
     try {
-      const res = await fetch("https://vikss-backend.onrender.com/ask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ prompt })
-      });
+const res = await fetch("https://vikss-backend.onrender.com/ask", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ prompt })
+});
 
-      const data = await res.json();
-      responseBox.innerText = data.response;
+if (!res.ok) {
+  const errorText = await res.text();
+  throw new Error(`Server error (${res.status}): ${errorText}`);
+}
+
+const data = await res.json();
+responseBox.innerText = data.response;
+
     } catch (error) {
       responseBox.innerText = "Error contacting server.";
       console.error("Request failed:", error);
